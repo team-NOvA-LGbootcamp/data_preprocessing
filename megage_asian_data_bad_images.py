@@ -39,14 +39,17 @@ os.makedirs(too_blurry_path, exist_ok=True)
 
 
 # 임계값 설정
-face_detection_threshold = 0.1
+face_detection_threshold = 0.01
 brightness_threshold = 80
 blur_threshold = 4
 
+# 범위
+start = 0
+end = -1
 
 # Mediapipe 얼굴 검출 클래스 초기화
-with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=face_detection_threshold) as face_detection:
-    for file in tqdm(image_files, desc='Processing images', unit='image'):
+with mp_face_detection.FaceDetection(model_selection=0, min_detection_confidence=face_detection_threshold) as face_detection:
+    for file in tqdm(image_files[start:end], desc='Processing images', unit='image'):
         image = cv2.imread(file)
         
         # 얼굴 검출 수행
